@@ -6,36 +6,52 @@ public class sortingAlgorithmsMain {
 	
 	static Random r = new Random();
 	static final int LAENGE = 10;
+	static int counter = 0;
 
 	public static void main(String[] args) {
 		int[] array = createArray(LAENGE);
-		int[] bS = bubbleSort(array);
-		int[] iS = insertionSort(array);
-		int[] sS = selectionSort(array);
+		
 		System.out.println("Original Array:");
 		for (int i = 0; i < array.length; i++) {
 			System.out.print(array[i]+" ");
 		}
-		System.out.println();
+		System.out.println("\n");
+		
+		int[] bubbleS = bubbleSort(array);
+		
 		System.out.println("BubbleSort:");
-		for (int i = 0; i < bS.length; i++) {
-			System.out.print(bS[i]+" ");
+		for (int i = 0; i < bubbleS.length; i++) {
+			System.out.print(bubbleS[i]+" ");
 		}
-		System.out.println();
+		System.out.println("\n");
+		
+		int[] iS = insertionSort(array);
+		
 		System.out.println("InsertionSort:");
 		for (int i = 0; i < iS.length; i++) {
 			System.out.print(iS[i]+" ");
 		}
-		System.out.println();
+		System.out.println("\n");
+		
+		int[] sS = selectionSort(array);
+		
 		System.out.println("SelectionSort:");
 		for (int i = 0; i < sS.length; i++) {
 			System.out.print(sS[i]+" ");
+		}
+		System.out.println("\n");
+		
+		int[] bogoS = bogoSort(array);
+		
+		System.out.println("BogoSort: ("+counter+" Sortierschritte)");
+		for (int i = 0; i < bogoS.length; i++) {
+			System.out.print(bogoS[i]+" ");
 		}
 	}
 	public static int[] createArray(int LAENGE) {
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < a.length; i++) {
-			a[i] = r.nextInt(LAENGE);
+			a[i] = r.nextInt(a.length);
 		}
 		return a;
 	}
@@ -89,5 +105,32 @@ public class sortingAlgorithmsMain {
 			}
 		}
 		return a;
+	}
+	public static int[] bogoSort(int[] array) {
+		int[] a = new int[LAENGE];
+		for (int i = 0; i < array.length; i++) {
+			a[i] = array[i];
+		}
+		while(!isSorted(a)) { //check if the array is sorted, if not swap 2 random positions
+			counter++;
+			//Select 2 random positions of the array
+			int index1 = r.nextInt(a.length);
+			int index2 = r.nextInt(a.length);
+			//swap the selected positions
+			int temp = a[index1];
+			a[index1] = a[index2];
+			a[index2] = temp;
+		}
+		return a;
+	}
+	public static boolean isSorted(int[] a) {
+		boolean sorted = true;
+		for (int i = 0; i < a.length - 1; i++) {
+			if (a[i] > a[i + 1]) {
+				sorted = false;
+				break;
+			}
+		}
+		return sorted;
 	}
 }
