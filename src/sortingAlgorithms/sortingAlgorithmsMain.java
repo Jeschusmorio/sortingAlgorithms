@@ -1,5 +1,6 @@
 package sortingAlgorithms;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class sortingAlgorithmsMain {
@@ -48,6 +49,9 @@ public class sortingAlgorithmsMain {
 			System.out.print(bogoS[i]+" ");
 		}
 	}
+	
+	//Creates a randomly filled Array with a length of LAENGE
+	
 	public static int[] createArray(int LAENGE) {
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < a.length; i++) {
@@ -55,6 +59,9 @@ public class sortingAlgorithmsMain {
 		}
 		return a;
 	}
+	
+	//BubbleSort
+	
 	public static int[] bubbleSort(int[] array) {
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < array.length; i++) {
@@ -73,6 +80,9 @@ public class sortingAlgorithmsMain {
 		}
 		return a;
 	}
+	
+	//InsertionSort
+	
 	public static int[] insertionSort(int[] array) {
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < array.length; i++) {
@@ -90,6 +100,9 @@ public class sortingAlgorithmsMain {
 		}
 		return a;
 	}
+	
+	//SelectionSort
+	
 	public static int[] selectionSort(int[] array) {
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < array.length; i++) {
@@ -106,6 +119,9 @@ public class sortingAlgorithmsMain {
 		}
 		return a;
 	}
+	
+	//BogoSort according to german Wikipedia page
+	
 	public static int[] bogoSort(int[] array) {
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < array.length; i++) {
@@ -123,6 +139,22 @@ public class sortingAlgorithmsMain {
 		}
 		return a;
 	}
+	
+	//BogoSort according to english Wikipedia page
+	/*
+	public static int[] bogoSort(int[] array) {
+		int[] a = new int[LAENGE];
+		for (int i = 0; i < array.length; i++) {
+			a[i] = array[i];
+		}
+		while(!isSorted(a)) {
+			Arrays.Shuffle(a);
+		}
+		return a;
+	}*/
+	
+	//Checks if an Array is sorted
+	
 	public static boolean isSorted(int[] a) {
 		boolean sorted = true;
 		for (int i = 0; i < a.length - 1; i++) {
