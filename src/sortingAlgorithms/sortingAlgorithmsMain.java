@@ -1,58 +1,54 @@
 package sortingAlgorithms;
 
-import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class sortingAlgorithmsMain {
 	
 	static Random r = new Random();
-	static final int LAENGE = 10;
-	static int counter = 0;
+	static int LAENGE;
+	static long counter = 0;
+	static long bubbleTime;
+	static long iTime;
+	static long sTime;
+	static long bogoTime;
 
 	public static void main(String[] args) {
-		int[] array = createArray(LAENGE);
-		
-		System.out.println("Original Array:");
-		for (int i = 0; i < array.length; i++) {
-			System.out.print(array[i]+" ");
-		}
-		System.out.println("\n");
+		int[] array = createArray();
+		output("Original Array:", array);
 		
 		int[] bubbleS = bubbleSort(array);
-		
-		System.out.println("BubbleSort:");
-		for (int i = 0; i < bubbleS.length; i++) {
-			System.out.print(bubbleS[i]+" ");
-		}
-		System.out.println("\n");
+		output("BubbleSort:", bubbleS, bubbleTime);
 		
 		int[] iS = insertionSort(array);
-		
-		System.out.println("InsertionSort:");
-		for (int i = 0; i < iS.length; i++) {
-			System.out.print(iS[i]+" ");
-		}
-		System.out.println("\n");
+		output("InsertionSort:", iS, iTime);
 		
 		int[] sS = selectionSort(array);
-		
-		System.out.println("SelectionSort:");
-		for (int i = 0; i < sS.length; i++) {
-			System.out.print(sS[i]+" ");
-		}
-		System.out.println("\n");
+		output("SelectionSort:", sS, sTime);
 		
 		int[] bogoS = bogoSort(array);
-		
-		System.out.println("BogoSort: ("+counter+" Sortierschritte)");
-		for (int i = 0; i < bogoS.length; i++) {
-			System.out.print(bogoS[i]+" ");
-		}
+		output("BogoSort: ("+counter+" Sortierschritte)", bogoS, bogoTime);
 	}
 	
 	//Creates a randomly filled Array with a length of LAENGE
 	
-	public static int[] createArray(int LAENGE) {
+	public static int[] createArray() {
+		boolean ok = true;
+		do {
+			try {
+				ok = true;
+				Scanner sc = new Scanner(System.in);
+				System.out.print("Geben Sie die Länge des zufällig erzeugten Arrays an : ");
+				LAENGE = sc.nextInt();
+				if (LAENGE < 5) {
+					System.out.println("Die Länge des Arrays muss mindestes 5 entsprechen!");
+					ok = false;
+				}
+			} catch (Exception e) {
+				System.out.println("Geben Sie bitte einen gültigen Wert ein!");
+				ok = false;
+			}
+		} while (ok == false);
 		int[] a = new int[LAENGE];
 		for (int i = 0; i < a.length; i++) {
 			a[i] = r.nextInt(a.length);
@@ -67,6 +63,7 @@ public class sortingAlgorithmsMain {
 		for (int i = 0; i < array.length; i++) {
 			a[i] = array[i];
 		}
+		long beginTime = getTime();
 		int temp;
 		for(int i = 1; i < a.length; i++) {
 			for(int j = 0; j < a.length - i; j++) {
@@ -78,6 +75,7 @@ public class sortingAlgorithmsMain {
 				
 			}
 		}
+		bubbleTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -88,6 +86,7 @@ public class sortingAlgorithmsMain {
 		for (int i = 0; i < array.length; i++) {
 			a[i] = array[i];
 		}
+		long beginTime = getTime();
 		int temp;
 		for (int i = 1; i < a.length; i++) {
 			temp = a[i];
@@ -98,6 +97,7 @@ public class sortingAlgorithmsMain {
 			}
 			a[j] = temp;
 		}
+		iTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -108,6 +108,7 @@ public class sortingAlgorithmsMain {
 		for (int i = 0; i < array.length; i++) {
 			a[i] = array[i];
 		}
+		long beginTime = getTime();
 		for (int i = 0; i < a.length - 1; i++) {
 			for (int j = i + 1; j < a.length; j++) {
 				if (a[i] > a[j]) {
@@ -117,6 +118,7 @@ public class sortingAlgorithmsMain {
 				}
 			}
 		}
+		sTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -127,6 +129,7 @@ public class sortingAlgorithmsMain {
 		for (int i = 0; i < array.length; i++) {
 			a[i] = array[i];
 		}
+		long beginTime = getTime();
 		while(!isSorted(a)) { //check if the array is sorted, if not swap 2 random positions
 			counter++;
 			//Select 2 random positions of the array
@@ -137,6 +140,7 @@ public class sortingAlgorithmsMain {
 			a[index1] = a[index2];
 			a[index2] = temp;
 		}
+		bogoTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -164,5 +168,22 @@ public class sortingAlgorithmsMain {
 			}
 		}
 		return sorted;
+	}
+	public static void output(String s, int[] a) {
+		System.out.println(s);
+		for (int i = 0; i < a.length; i++) {
+			System.out.print(a[i]+" ");
+		}
+		System.out.println("\n");
+	}
+	public static void output(String s, int[] a, long time) {
+		System.out.println(s+" ("+time+"ns)");
+		for (int i = 0; i < a.length; i++) {
+			System.out.print(a[i]+" ");
+		}
+		System.out.println("\n");
+	}
+	public static long getTime() {
+		return System.nanoTime();
 	}
 }
