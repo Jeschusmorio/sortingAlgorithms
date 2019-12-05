@@ -7,27 +7,24 @@ public class sortingAlgorithmsMain {
 	
 	static Random r = new Random();
 	static int LAENGE;
-	static long counter = 0;
-	static long bubbleTime;
-	static long iTime;
-	static long sTime;
-	static long bogoTime;
+	static long bogoCounter = 0;
+	static long sortingTime;
 
 	public static void main(String[] args) {
 		int[] array = createArray();
 		output("Original Array:", array);
 		
 		int[] bubbleS = bubbleSort(array);
-		output("BubbleSort:", bubbleS, bubbleTime);
+		output("BubbleSort:", bubbleS, sortingTime);
 		
 		int[] iS = insertionSort(array);
-		output("InsertionSort:", iS, iTime);
+		output("InsertionSort:", iS, sortingTime);
 		
 		int[] sS = selectionSort(array);
-		output("SelectionSort:", sS, sTime);
+		output("SelectionSort:", sS, sortingTime);
 		
 		int[] bogoS = bogoSort(array);
-		output("BogoSort: ("+counter+" Sortierschritte)", bogoS, bogoTime);
+		output("BogoSort: ("+bogoCounter+" Sortierschritte)", bogoS, sortingTime);
 	}
 	
 	//Creates a randomly filled Array with a length of LAENGE
@@ -75,7 +72,7 @@ public class sortingAlgorithmsMain {
 				
 			}
 		}
-		bubbleTime = getTime() - beginTime;
+		sortingTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -97,7 +94,7 @@ public class sortingAlgorithmsMain {
 			}
 			a[j] = temp;
 		}
-		iTime = getTime() - beginTime;
+		sortingTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -118,7 +115,7 @@ public class sortingAlgorithmsMain {
 				}
 			}
 		}
-		sTime = getTime() - beginTime;
+		sortingTime = getTime() - beginTime;
 		return a;
 	}
 	
@@ -131,7 +128,7 @@ public class sortingAlgorithmsMain {
 		}
 		long beginTime = getTime();
 		while(!isSorted(a)) { //check if the array is sorted, if not swap 2 random positions
-			counter++;
+			bogoCounter++;
 			//Select 2 random positions of the array
 			int index1 = r.nextInt(a.length);
 			int index2 = r.nextInt(a.length);
@@ -140,7 +137,7 @@ public class sortingAlgorithmsMain {
 			a[index1] = a[index2];
 			a[index2] = temp;
 		}
-		bogoTime = getTime() - beginTime;
+		sortingTime = getTime() - beginTime;
 		return a;
 	}
 	
