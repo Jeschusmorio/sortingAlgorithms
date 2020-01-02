@@ -25,6 +25,9 @@ public class sortingAlgorithmsMain {
 		
 		int[] bogoS = bogoSort(array);
 		output("BogoSort: ("+bogoCounter+" Sortierschritte)", bogoS, sortingTime);
+		
+		int[] qS = quickSort(array);
+		output("QuickSort:", qS, sortingTime);
 	}
 	
 	//Creates a randomly filled Array with a length of LAENGE
@@ -53,13 +56,18 @@ public class sortingAlgorithmsMain {
 		return a;
 	}
 	
+	public static int[] copyArray(int[] array) {
+		int[] arrayCopy = new int[array.length];
+		for (int i = 0; i < array.length; i++) {
+			arrayCopy[i] = array[i];
+		}
+		return arrayCopy;
+	}
+	
 	//BubbleSort
 	
 	public static int[] bubbleSort(int[] array) {
-		int[] a = new int[LAENGE];
-		for (int i = 0; i < array.length; i++) {
-			a[i] = array[i];
-		}
+		int[] a = copyArray(array);
 		long beginTime = getTime();
 		int temp;
 		for(int i = 1; i < a.length; i++) {
@@ -79,10 +87,7 @@ public class sortingAlgorithmsMain {
 	//InsertionSort
 	
 	public static int[] insertionSort(int[] array) {
-		int[] a = new int[LAENGE];
-		for (int i = 0; i < array.length; i++) {
-			a[i] = array[i];
-		}
+		int[] a = copyArray(array);
 		long beginTime = getTime();
 		int temp;
 		for (int i = 1; i < a.length; i++) {
@@ -101,10 +106,7 @@ public class sortingAlgorithmsMain {
 	//SelectionSort
 	
 	public static int[] selectionSort(int[] array) {
-		int[] a = new int[LAENGE];
-		for (int i = 0; i < array.length; i++) {
-			a[i] = array[i];
-		}
+		int[] a = copyArray(array);
 		long beginTime = getTime();
 		for (int i = 0; i < a.length - 1; i++) {
 			for (int j = i + 1; j < a.length; j++) {
@@ -122,10 +124,7 @@ public class sortingAlgorithmsMain {
 	//BogoSort according to german Wikipedia page
 	
 	public static int[] bogoSort(int[] array) {
-		int[] a = new int[LAENGE];
-		for (int i = 0; i < array.length; i++) {
-			a[i] = array[i];
-		}
+		int[] a = copyArray(array);
 		long beginTime = getTime();
 		while(!isSorted(a)) { //check if the array is sorted, if not swap 2 random positions
 			bogoCounter++;
@@ -141,19 +140,6 @@ public class sortingAlgorithmsMain {
 		return a;
 	}
 	
-	//BogoSort according to english Wikipedia page
-	/*
-	public static int[] bogoSort(int[] array) {
-		int[] a = new int[LAENGE];
-		for (int i = 0; i < array.length; i++) {
-			a[i] = array[i];
-		}
-		while(!isSorted(a)) {
-			Arrays.Shuffle(a);
-		}
-		return a;
-	}*/
-	
 	//Checks if an Array is sorted
 	
 	public static boolean isSorted(int[] a) {
@@ -166,6 +152,56 @@ public class sortingAlgorithmsMain {
 		}
 		return sorted;
 	}
+	
+	//QuickSort
+	
+	public static int[] quickSort(int[] array) {
+		int[] a = copyArray(array);
+		long beginTime = getTime();
+		quickSortLoop(a, 0, LAENGE - 1);
+		sortingTime = getTime() - beginTime;
+		return a;
+	}
+	
+	//Loops the Sorting-Algorithm of QuickSort
+	
+	public static void quickSortLoop(int[] a, int start, int end) {
+		if (start >= end) {
+			return;
+		}
+		int p = partition(a, start, end);
+		quickSortLoop(a, start, p-1);
+		quickSortLoop(a, p+1, end);
+	}
+	
+	//Sorting of an partition of a quickSort-Array
+	
+	public static int partition(int[] a, int start, int end) {
+		int pivot = a[start];
+		int low = start + 1;
+		int high = end;
+		while (true) {
+			while ((low <= high) && (a[high] >= pivot)) {
+				high = high - 1;
+			}
+			while ((low <= high) && (a[low] <= pivot)) {
+				low = low + 1;
+			}
+			if (low <= high) {
+				int[] copyArray = copyArray(a);
+				a[low] = copyArray[high];
+				a[high] = copyArray[low];
+			}
+			else {
+				break;
+			}
+		}
+		int[] copyArray = copyArray(a);
+		a[high] = copyArray[start];
+		a[start] = copyArray[high];
+		return high;
+	}
+	
 	public static void output(String s, int[] a) {
 		System.out.println(s);
 		for (int i = 0; i < a.length; i++) {
