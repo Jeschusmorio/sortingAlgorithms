@@ -23,11 +23,11 @@ public class sortingAlgorithmsMain {
 		int[] sS = selectionSort(array);
 		output("SelectionSort:", sS, sortingTime);
 		
-		int[] bogoS = bogoSort(array);
-		output("BogoSort: ("+bogoCounter+" Sortierschritte)", bogoS, sortingTime);
-		
 		int[] qS = quickSort(array);
 		output("QuickSort:", qS, sortingTime);
+		
+		int[] bogoS = bogoSort(array);
+		output("BogoSort: ("+bogoCounter+" Sortierschritte)", bogoS, sortingTime);
 	}
 	
 	//Creates a randomly filled Array with a length of LAENGE
